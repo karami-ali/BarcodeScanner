@@ -108,7 +108,7 @@ public final class MessageViewController: UIViewController {
     switch status.state {
     case .scanning, .unauthorized:
       textLabel.numberOfLines = 3
-      textLabel.textAlignment = .left
+      textLabel.textAlignment = .right
       imageView.tintColor = regularTintColor
     case .processing:
       textLabel.numberOfLines = 10
