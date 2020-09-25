@@ -3,18 +3,18 @@ import AVFoundation
 
 /// Delegate to handle camera setup and video capturing.
 protocol CameraViewControllerDelegate: class {
-  func cameraViewControllerDidSetupCaptureSession(_ controller: CameraViewController)
-  func cameraViewControllerDidFailToSetupCaptureSession(_ controller: CameraViewController)
-  func cameraViewController(_ controller: CameraViewController, didReceiveError error: Error)
-  func cameraViewControllerDidTapSettingsButton(_ controller: CameraViewController)
+  func cameraViewControllerDidSetupCaptureSession(_ controller: CameraVC)
+  func cameraViewControllerDidFailToSetupCaptureSession(_ controller: CameraVC)
+  func cameraViewController(_ controller: CameraVC, didReceiveError error: Error)
+  func cameraViewControllerDidTapSettingsButton(_ controller: CameraVC)
   func cameraViewController(
-    _ controller: CameraViewController,
+    _ controller: CameraVC,
     didOutput metadataObjects: [AVMetadataObject]
   )
 }
 
 /// View controller responsible for camera controls and video capturing.
-public final class CameraViewController: UIViewController {
+public final class CameraVC: UIViewController {
   weak var delegate: CameraViewControllerDelegate?
 
   /// Focus view type.
@@ -302,7 +302,7 @@ public final class CameraViewController: UIViewController {
 
 // MARK: - Layout
 
-private extension CameraViewController {
+private extension CameraVC {
   func setupConstraints() {
     if #available(iOS 11.0, *) {
       NSLayoutConstraint.activate(
@@ -395,7 +395,7 @@ private extension CameraViewController {
 
 // MARK: - Subviews factory
 
-private extension CameraViewController {
+private extension CameraVC {
   func makeFocusView() -> UIView {
     let view = UIView()
     view.layer.borderColor = UIColor.white.cgColor
@@ -430,7 +430,7 @@ private extension CameraViewController {
 
 // MARK: - AVCaptureMetadataOutputObjectsDelegate
 
-extension CameraViewController: AVCaptureMetadataOutputObjectsDelegate {
+extension CameraVC: AVCaptureMetadataOutputObjectsDelegate {
   public func metadataOutput(_ output: AVCaptureMetadataOutput,
                              didOutput metadataObjects: [AVMetadataObject],
                              from connection: AVCaptureConnection) {
