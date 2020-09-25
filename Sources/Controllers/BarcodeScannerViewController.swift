@@ -70,7 +70,7 @@ open class BarcodeScannerViewController: UIViewController {
   /// Information view with description label.
   public private(set) lazy var messageViewController: MessageViewController = .init()
   /// Camera view with custom buttons.
-  public private(set) lazy var cameraViewController: CameraViewController = .init()
+  public private(set) lazy var cameraViewController: CameraVC = .init()
 
   // Constraints that are activated when the view is used as a footer.
   private lazy var collapsedConstraints: [NSLayoutConstraint] = self.makeCollapsedConstraints()
@@ -289,19 +289,19 @@ extension BarcodeScannerViewController: HeaderViewControllerDelegate {
 // MARK: - CameraViewControllerDelegate
 
 extension BarcodeScannerViewController: CameraViewControllerDelegate {
-  func cameraViewControllerDidSetupCaptureSession(_ controller: CameraViewController) {
+  func cameraViewControllerDidSetupCaptureSession(_ controller: CameraVC) {
     status = Status(state: .scanning)
   }
 
-  func cameraViewControllerDidFailToSetupCaptureSession(_ controller: CameraViewController) {
+  func cameraViewControllerDidFailToSetupCaptureSession(_ controller: CameraVC) {
     status = Status(state: .unauthorized)
   }
 
-  func cameraViewController(_ controller: CameraViewController, didReceiveError error: Error) {
+  func cameraViewController(_ controller: CameraVC, didReceiveError error: Error) {
     errorDelegate?.scanner(self, didReceiveError: error)
   }
 
-  func cameraViewControllerDidTapSettingsButton(_ controller: CameraViewController) {
+  func cameraViewControllerDidTapSettingsButton(_ controller: CameraVC) {
     DispatchQueue.main.async {
       if let settingsURL = URL(string: UIApplicationOpenSettingsURLString) {
         UIApplication.shared.openURL(settingsURL)
@@ -309,7 +309,7 @@ extension BarcodeScannerViewController: CameraViewControllerDelegate {
     }
   }
 
-  func cameraViewController(_ controller: CameraViewController,
+  func cameraViewController(_ controller: CameraVC,
                             didOutput metadataObjects: [AVMetadataObject]) {
     guard !locked && isVisible else { return }
     guard !metadataObjects.isEmpty else { return }
